@@ -1,9 +1,8 @@
 .env
-bin
-include
-lib
+scraping
 __pycache__
 pyvenv.cfg
 sandbox.py
 test.json
 test1.json
+.vscode

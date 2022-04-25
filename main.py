@@ -9,6 +9,7 @@ from scraping import scrape_page
 from parse_object import parse_kpopmonster
 from typing import List
 from send_mail import send_mail
+from post_data import post_data
 
 
 def get_data(url, group_name, parser):
@@ -60,7 +61,8 @@ def main(url):
             group_url = f'{url}?tag={group}'
             result: List[dict] = get_data(group_url, group, parse_kpopmonster)
             if len(result) > 0:
-                results.append(*result)
+                for r in result:
+                    results.append(r)
 
         print(results)
 
@@ -69,12 +71,14 @@ def main(url):
         description = 'success!'
 
         # APIに送信する。
+        post_data(results)
 
     except Exception as e:
         description = e
 
     # 結果をメールで送信
-    # send_mail(title='scraping result', description=description)
+    print(description)
+    send_mail(title='scraping and API post result', description=description)
 
 
 if __name__ == '__main__':
